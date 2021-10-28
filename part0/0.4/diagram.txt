@@ -1,4 +1,11 @@
 browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note
+
+note over server
+server stores the submitted note
+by appending it into an array
+named 'notes'
+end note
+
 server-->browser: 302 Found /exampleapp/notes
 
 note over browser:
@@ -19,7 +26,7 @@ that requests JSON data from server
 end note
 
 browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
-server-->browser: [{ content: "HTML is easy", date: "2019-05-23" }, ...]
+server-->browser: [..., { content: "Lorem ipsum", date: "2021-10-28" }]
 
 note over browser:
 browser executes the event handler
