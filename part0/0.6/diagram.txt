@@ -1,0 +1,9 @@
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note
+
+note over server
+server stores the submitted note
+by appending it into an array
+named 'notes'
+end note
+
+server-->browser: 201 Create
