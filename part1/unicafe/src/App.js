@@ -34,6 +34,11 @@ const App = () => {
   const handleNeutralClick = () => setNeutral(neutral + 1)
   const handleBadClick = () => setBad(bad + 1)
 
+  const total = good + neutral + bad;
+  const score = good - bad;
+  const average = total ? score/total : 0;
+  const positive = total ? good/total : 0;
+
   return (
     <div>
       <Header />
@@ -43,7 +48,9 @@ const App = () => {
       <Display text={`Good: ${good}`} />
       <Display text={`Neutral: ${neutral}`} />
       <Display text={`Bad: ${bad}`} />
-      <Display text={`Total: ${good + neutral + bad}`} />
+      <Display text={`Total: ${total}`} />
+      <Display text={`Average: ${average}`} />
+      <Display text={`Positive: ${positive * 100}%`} />
     </div>
   )
 }
