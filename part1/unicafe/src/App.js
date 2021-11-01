@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 
-const Header = () => {
+const Header = ({text}) => {
   return (
     <h1>
-      give feedback
+      {text}
     </h1>
   )
 }
@@ -28,9 +28,18 @@ const Statistics = ({data}) => {
   const { good, neutral, bad } = data
 
   const total = good + neutral + bad
+
+  if (total === 0) {
+    return (
+      <div>
+        No feedback given
+      </div>
+    )
+  }
+
   const score = good - bad
-  const average = total ? score/total : 0
-  const positive = total ? good/total : 0
+  const average = score/total
+  const positive = good/total*100
 
   return (
     <div>
@@ -39,7 +48,7 @@ const Statistics = ({data}) => {
       <Display text={`Bad: ${bad}`} />
       <Display text={`Total: ${total}`} />
       <Display text={`Average: ${average}`} />
-      <Display text={`Positive: ${positive * 100}%`} />
+      <Display text={`Positive: ${positive}%`} />
     </div>
   )
 }
@@ -62,10 +71,11 @@ const App = () => {
 
   return (
     <div>
-      <Header />
+      <Header text={'give feedback'}/>
       <Button handleClick={handleGoodClick} text={'Good'} />
       <Button handleClick={handleNeutralClick} text={'Neutral'} />
       <Button handleClick={handleBadClick} text={'Bad'} />
+      <Header text={'statistics'} />
       <Statistics data={data} />
     </div>
   )
