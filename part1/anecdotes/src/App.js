@@ -32,6 +32,7 @@ const App = () => {
   ]
    
   const [selected, setSelected] = useState(0)
+  const [votes, setVotes] = useState(new Array(anecdotes.length).fill(0))
 
   const setNextAnecdote = () => {
     let newSelected = selected
@@ -42,9 +43,17 @@ const App = () => {
     setSelected(newSelected)
   }
 
+  const voteAnecdote = () => {
+    const newVotes = [...votes]
+    newVotes[selected] += 1
+    setVotes(newVotes)
+  }
+
   return (
     <div>
       <Anecdote text={anecdotes[selected]} />
+      <div>Has {votes[selected]} vote{votes[selected] !== 1 ? 's' : ''}</div>
+      <Button handleClick={voteAnecdote} text={'Vote'} />
       <Button handleClick={setNextAnecdote} text={'Next anecdote'} />
     </div>
   )
