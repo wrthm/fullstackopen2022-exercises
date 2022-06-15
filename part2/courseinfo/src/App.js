@@ -1,5 +1,12 @@
 const Header = ({ course }) => <h1>{course}</h1>
 
+const Total = ({ parts }) =>
+  <p>
+    <b>
+      total of exercises { parts[0].exercises + parts[1].exercises + parts[2].exercises }
+    </b>
+  </p>
+
 const Part = ({ part }) => 
   <p>
     {part.name} {part.exercises}
@@ -25,6 +32,7 @@ const Course = ({ course }) => {
     <div>
       <Header course={name} />
       <Content parts={parts} />
+      <Total parts={parts} />
     </div>
   )
 }
