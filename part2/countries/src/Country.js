@@ -1,7 +1,7 @@
 import CountryDetail from "./CountryDetail"
 import CountryList from "./CountryList"
 
-const Country = ({ countries, filter }) => {
+const Country = ({ countries, filter, setFilter }) => {
   if (!filter.length) {
     return <div />
   }
@@ -19,7 +19,7 @@ const Country = ({ countries, filter }) => {
     childComponent = <CountryDetail country={filteredCountries[0]} />
   }
   else {
-    childComponent = <CountryList countries={filteredCountries} />
+    childComponent = <CountryList countries={filteredCountries} setFilter={setFilter} />
   }
 
   return (

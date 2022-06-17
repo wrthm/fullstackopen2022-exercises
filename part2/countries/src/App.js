@@ -12,15 +12,13 @@ const App = () => {
       .then(response => setCountries(response.data))
   }, [])
 
-  const handleFilterChange = event => {
-    setFilter(event.target.value)
-  }
+  const handleFilterChange = event => setFilter(event.target.value)
 
   if (countries.length) {
     return (
       <div>
         <div>Find countries <input value={filter} onChange={handleFilterChange} /></div>
-        <Country countries={countries} filter={filter} />
+        <Country countries={countries} filter={filter} setFilter={setFilter} />
       </div>
     )
   }
