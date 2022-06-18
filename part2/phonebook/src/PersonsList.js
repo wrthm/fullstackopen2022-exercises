@@ -1,7 +1,7 @@
-const Persons = ({ data, filter }) => (
+const PersonsList = ({ data, filter }) => (
   <div>
     {data.filter((person) => person.name.toLowerCase().startsWith(filter.toLowerCase())).map((person) => <div key={person.id}>{person.name} {person.number}</div>)}
   </div>
 )
 
-export default Persons
+export default PersonsList
