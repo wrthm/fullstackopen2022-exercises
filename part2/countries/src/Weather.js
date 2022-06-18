@@ -10,10 +10,10 @@ const Weather = ({ country }) => {
       .get(`http://api.openweathermap.org/geo/1.0/direct?q=${country.capital[0]},${country.ccn3}&limit=1&appid=${api_key}`)
       .then(response => {
         const { lat, lon } = response.data[0]
-        axios
-          .get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${api_key}&units=metric`)
-          .then(response => setWeather(response.data))
+        return { lat, lon }
       })
+      .then(({ lat, lon }) => axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${api_key}&units=metric`)
+      .then(response => setWeather(response.data)))
   }, [api_key, country.capital, country.ccn3])
 
   if (Object.keys(weather).length) {
