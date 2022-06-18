@@ -14,23 +14,35 @@ const App = () => {
     personService.getAll().then(data => setPersons(data))
   }, [])
 
+  const resetFormFields = () => {
+    setNewName('')
+    setNewNumber('')
+    setFilter('')
+  }
+
   const handleAddPerson = event => {
     event.preventDefault()
     if (newName === '') {
       return
     }
-    if (persons.some(person => person.name === newName)) {
-      alert(`${newName} is already added to phonebook.`)
+
+    const existingPerson = persons.find(person => person.name.toLowerCase() === newName.toLowerCase())
+    if (existingPerson) {
+      if (window.confirm(`${existingPerson.name} is already in phonebook, replace the old number with a new one?`)) {
+        personService
+          .update({ ...existingPerson, number: newNumber })
+          .then(updatedEntry => {
+            setPersons(persons.map(person => person.id === existingPerson.id ? updatedEntry : person))
+            resetFormFields()
+          })
+      }
     }
     else {
-      const newPerson = { name: newName, number: newNumber }
       personService
-        .create(newPerson)
+        .create({ name: newName, number: newNumber })
         .then(data => {
           setPersons(persons.concat(data))
-          setNewName('')
-          setNewNumber('')
-          setFilter('')
+          resetFormFields()
         })
     }
   }
