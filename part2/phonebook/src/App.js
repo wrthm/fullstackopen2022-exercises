@@ -26,10 +26,14 @@ const App = () => {
     }
     else {
       const newPerson = { name: newName, number: newNumber }
-      setPersons(persons.concat(newPerson))
-      setNewName('')
-      setNewNumber('')
-      setFilter('')
+      axios
+        .post('http://127.0.0.1:3001/persons', newPerson)
+        .then(response => {
+          setPersons(persons.concat(response.data))
+          setNewName('')
+          setNewNumber('')
+          setFilter('')
+        })
     }
   }
 
