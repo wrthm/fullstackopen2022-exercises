@@ -43,7 +43,11 @@ const App = () => {
           .then(updatedEntry => {
             setPersons(persons.map(person => person.id === existingPerson.id ? updatedEntry : person))
             resetFormFields()
-            showNotification(`Updated ${newName}`, true)
+            showNotification(`Updated ${existingPerson.name}`, true)
+          })
+          .catch(error => {
+            showNotification(`${existingPerson.name}'s data was already removed from server`, false)
+            setPersons(persons.filter(person => person.id !== existingPerson.id))
           })
       }
     }
@@ -59,14 +63,16 @@ const App = () => {
   }
 
   const handleDeletePerson = id => {
+    const afterDeletion = () => {
+      setPersons(persons.filter(person => person.id !== id))
+      showNotification(`Deleted ${selectedPerson.name}`, true)
+    }
     const selectedPerson = persons.find(person => person.id === id)
     if (window.confirm(`Delete ${selectedPerson.name}?`)) {
       personService
         .deleteId(id)
-        .then(response => {
-          setPersons(persons.filter(person => person.id !== id))
-          showNotification(`Deleted ${selectedPerson.name}`, true)
-        })
+        .then(afterDeletion)
+        .catch(afterDeletion)
     }
   }
 
