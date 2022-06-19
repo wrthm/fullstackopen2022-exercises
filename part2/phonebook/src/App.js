@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import Filter from './Filter'
+import Notification from './Notification'
 import PersonForm from './PersonForm'
 import PersonsList from './PersonsList'
 import * as personService from './services/persons'
@@ -9,6 +10,7 @@ const App = () => {
   const [filter, setFilter] = useState('')
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
+  const [notification, setNotification] = useState(null)
 
   useEffect(() => {
     personService.getAll().then(data => setPersons(data))
@@ -18,6 +20,13 @@ const App = () => {
     setNewName('')
     setNewNumber('')
     setFilter('')
+  }
+
+  const showNotification = (message, success = true) => {
+    setNotification({ message, success })
+    setTimeout(() => {
+      setNotification(null)
+    }, 5000)
   }
 
   const handleAddPerson = event => {
@@ -34,6 +43,7 @@ const App = () => {
           .then(updatedEntry => {
             setPersons(persons.map(person => person.id === existingPerson.id ? updatedEntry : person))
             resetFormFields()
+            showNotification(`Updated ${newName}`, true)
           })
       }
     }
@@ -43,6 +53,7 @@ const App = () => {
         .then(data => {
           setPersons(persons.concat(data))
           resetFormFields()
+          showNotification(`Added ${newName}`, true)
         })
     }
   }
@@ -54,6 +65,7 @@ const App = () => {
         .deleteId(id)
         .then(response => {
           setPersons(persons.filter(person => person.id !== id))
+          showNotification(`Deleted ${selectedPerson.name}`, true)
         })
     }
   }
@@ -65,6 +77,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification data={notification} />
       <Filter filter={filter} handleFilterChange={handleFilterChange} />
       <h2>Add new entry</h2>
         <PersonForm name={newName} handleNameChange={handleNameChange} number={newNumber} handleNumberChange={handleNumberChange} handleAddPerson={handleAddPerson} />

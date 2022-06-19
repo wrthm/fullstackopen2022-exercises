@@ -1,0 +1,16 @@
+.notification {
+  color: black;
+  font-size: 16pt;
+  border-style: solid;
+  border-radius: 5px;
+  padding: 12px;
+  margin-bottom: 1em;
+}
+
+.notification-success {
+  background-color: lightgreen;
+}
+
+.notification-failure {
+  background-color: lightcoral;
+}
